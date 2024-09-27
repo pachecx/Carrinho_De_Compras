@@ -1,0 +1,21 @@
+/* eslint-disable react/prop-types */
+
+const Product = ({product}) => {
+  return (
+    <div className='flex flex-col gap-1' >
+        <img className="mb-2 max-h-60 max-w-72" src={product.image} alt={product.name}/> 
+        <h3>{product.title}</h3>
+        <p className="text-green-400 font-bold">${product.price}</p>
+        <div className="card-buttons">
+            <select className=" ">
+                <option value="">1</option>
+            </select>
+            <button className="border border-solid border-gray-400 rounded-md px-2 bg-slate-300">
+                Adicionar ao carrinho
+            </button>
+        </div>
+    </div>
+  )
+}
+
+export default Product
