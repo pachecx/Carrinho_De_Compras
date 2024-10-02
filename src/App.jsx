@@ -30,6 +30,22 @@ function App() {
     });
   };
 
+  const handkerUpdateCart = (product, quantity) => {
+    setCartItems((prevItems) => {
+      toast.info(`${product.name} Quantidade adicionada com sucesso!`);
+      return prevItems.map((item) =>
+        item.id === product.id ? { ...item, quantity: +quantity } : item
+      );
+    });
+  };
+
+  const hadleRemoveFromCart = (product) => {
+    toast.error(`${product.name} foi removido com sucesso!`);
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== product.id)
+    );
+  };
+
   return (
     <BrowserRouter>
       <nav className="p-2 bg-slate-700 text-white">
@@ -42,7 +58,25 @@ function App() {
       <div className="p-5">
         <Routes>
           <Route path="/" element={<Catalogo onAddToCart={handleAddCart} />} />
-          <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cartItems={cartItems}
+                onUpdateCart={handkerUpdateCart}
+                onRemoveFromCart={hadleRemoveFromCart}
+                setCartItems={setCartItems}
+                onCheckout={() => {
+                  if (cartItems.length > 0) {
+                    toast.success("Compra finalizada com sucesso!");
+                    setCartItems([]);
+                  } else {
+                    toast.error("Seu carrinho esta vazio!");
+                  }
+                }}
+              />
+            }
+          />
           <Route path="/thankyou" element={<ThankYou />} />
         </Routes>
       </div>
